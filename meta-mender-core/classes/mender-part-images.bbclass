@@ -92,6 +92,14 @@ part --source rawcopy --sourceparams="file=$bootloader_file" --ondisk "$ondisk_d
 EOF
     fi
 
+    if ${@bb.utils.contains('DISTRO_FEATURES', 'mender-uboot-stm32mp1', 'true', 'false', d)}; then
+        cat >> "$wks" <<EOF
+part --source rawcopy --sourceparams="file=${MENDER_UBOOT_FSBL1}" --ondisk "$ondisk_dev" --align 1 --part-name ${MENDER_UBOOT_FSBL1_NAME}
+part --source rawcopy --sourceparams="file=${MENDER_UBOOT_FSBL2}" --ondisk "$ondisk_dev" --align 1 --part-name ${MENDER_UBOOT_FSBL2_NAME}
+part --source rawcopy --sourceparams="file=${MENDER_UBOOT_SSBL}" --ondisk "$ondisk_dev" --align 1 --part-name ${MENDER_UBOOT_SSBL_NAME}
+EOF
+    fi
+
     if ${@bb.utils.contains('DISTRO_FEATURES', 'mender-uboot', 'true', 'false', d)} && [ -n "${MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET}" ]; then
         boot_env_align_kb=$(expr ${MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET} / 1024)
         cat >> "$wks" <<EOF
@@ -136,6 +144,7 @@ EOF
 
     echo "### Contents of wks file ###"
     cat "$wks"
+    cp $wks ${IMGDEPLOYDIR}
     echo "### End of contents of wks file ###"
 
     # Call WIC

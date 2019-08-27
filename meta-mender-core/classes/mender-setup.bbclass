@@ -149,6 +149,24 @@ MENDER_RESERVED_SPACE_BOOTLOADER_DATA_DEFAULT = "0"
 MENDER_UBOOT_STORAGE_INTERFACE ??= "${MENDER_UBOOT_STORAGE_INTERFACE_DEFAULT}"
 MENDER_UBOOT_STORAGE_INTERFACE_DEFAULT = ""
 
+MENDER_UBOOT_FSBL1 ??= "${MENDER_UBOOT_FSBL1_DEFAULT}"
+MENDER_UBOOT_FSBL1_DEFAULT = ""
+
+MENDER_UBOOT_FSBL2 ??= "${MENDER_UBOOT_FSBL2_DEFAULT}"
+MENDER_UBOOT_FSBL2_DEFAULT = ""
+
+MENDER_UBOOT_SSBL ??= "${MENDER_UBOOT_SSBL_DEFAULT}"
+MENDER_UBOOT_SSBL_DEFAULT = ""
+
+MENDER_UBOOT_FSBL1_NAME ??= "${MENDER_UBOOT_FSBL1_NAME_DEFAULT}"
+MENDER_UBOOT_FSBL1_NAME_DEFAULT = ""
+
+MENDER_UBOOT_FSBL2_NAME ??= "${MENDER_UBOOT_FSBL2_NAME_DEFAULT}"
+MENDER_UBOOT_FSBL2_NAME_DEFAULT = ""
+
+MENDER_UBOOT_SSBL_NAME ??= "${MENDER_UBOOT_SSBL_NAME_DEFAULT}"
+MENDER_UBOOT_SSBL_NAME_DEFAULT = ""
+
 # The device number of the interface to load partitions from. This is normally
 # empty, in which case it is deduced from MENDER_STORAGE_DEVICE. Only use this
 # if the indexing of devices is different in U-Boot and in the Linux kernel.
@@ -262,6 +280,9 @@ python() {
 
         # Setup the systemd machine ID to be persistent across OTA updates.
         'mender-persist-systemd-machine-id',
+
+        # Use Mender together with U-Boot & stm32mp1.
+        'mender-uboot-stm32mp1',
     }
 
     mfe = d.getVar('MENDER_FEATURES_ENABLE')
