@@ -1,4 +1,5 @@
 #!/bin/sh
 
 echo "$(mender -show-artifact): $(basename "$0") was called!" >&2
+psplash-write "MSG $(basename "$0") was called!"
 exit 0
